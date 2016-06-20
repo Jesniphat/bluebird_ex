@@ -87,9 +87,10 @@ var car = function(){
 
 	start()
 	.then(turnleft)
-	.then(turnright)
 	.then(backward)
-	.then(start).catch(function(e){
+	.then(start)
+	.then(turnright)
+	.catch(function(e){
 	  console.log(e);
 	});
  
