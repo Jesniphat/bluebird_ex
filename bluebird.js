@@ -95,3 +95,94 @@ mycar.start()
 .then(mycar.start).catch(function(e){
   console.log(e);
 });
+
+var car2 = function(){
+	var isStarted = false;
+  this.start = function(){
+    return new Promise((resolve, reject) => {
+      if(isStarted){
+        reject('Error:Already Started!');
+      }
+      else{
+        isStarted = true;
+        console.log('Started Engine');
+        resolve('Started Engine');
+      }
+    });
+  }
+  this.stop = function(){
+  	return new Promise((resolve, reject) => {
+      if(!isStarted){
+        reject('Error:Not Start yet!');
+      }
+      else{
+        isStarted = false;
+        console.log('Stopped Engine');
+        resolve('Stopped Engine');
+      }
+    });
+  }
+  this.forward = function(a){
+    return new Promise((resolve, reject) => {
+      console.log('forward',a);
+      if(!isStarted){
+        reject('Error:Not Start yet!');
+      }
+      else{
+        isStarted = true;
+        console.log('Go forward');
+        resolve('Go forward');
+      }
+    });
+  }
+  this.backward =function(){
+    var deferred = Promise.pending();
+    return new Promise((resolve, reject) => {
+      if(!isStarted){
+        reject('Error:Not Start yet!');
+      }
+      else{
+        isStarted = true;
+        console.log('Go backward');
+        resolve('Go backward');
+      }
+    });
+  }
+  this.turnleft=function(){
+    return new Promise((resolve, reject) => {
+      console.log("test1 = ",arguments);
+      console.log("test2 = ",arguments);
+      if(!isStarted){
+        reject('Error:Not Start yet!');
+      }
+      else{
+        isStarted = true;
+        console.log('Turn left');
+        resolve('Turn left');
+      }
+    });
+	}
+ 
+	this.turnright=function(){
+    return new Promise((resolve, reject) => {
+      if(!isStarted){
+        reject('Error:Not Start yet!');
+      }
+      else{
+        isStarted = true;
+        console.log('Turn right');
+        resolve('Turn right');
+      }
+    });
+	}
+}
+
+var carnew = new car2();
+carnew.start()
+.then(carnew.turnleft)
+.then(carnew.turnright)
+.then(carnew.backward)
+.then(carnew.start)
+.catch(function(e){
+  console.log(e);
+});
